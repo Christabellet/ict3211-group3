@@ -33,3 +33,28 @@ CICFlowMeter can auto-detect pcap files within a directory but stops when an err
 The script provides basic verbose output of the extraction process. Each file is reported as it completes, or if it encounters an error during processing.
 
 There is no custom logging implemented in this python file but CICFlowMeter logs all files received and processed.
+
+
+# Network Traffic Labeller
+
+This Python script processes CSV files generated from network traffic and categorizes them based on their traffic type such as Email, Chat, Streaming, File Transfer, VoIP, P2P. VPN based categories are also handled.
+
+The script focuses on some specific applications and services such as Firefox, Chrome, SMTP, POP3S, IMAPS, ICQ, AIM, Facebook, Hangouts, Vimeo, YouTube, Skype, FTPS, SFTP, uTorrent, Transmission (BitTorrent).
+
+## Requirements
+- Python 3.x
+- Pandas
+
+## How to use
+
+1. Place your CSV files in the `./output/` directory.
+2. Run `python <filename.py>` to start the data processing.
+
+## Script Overview
+
+The script works as follows:
+1. Walks through the `./output/` directory and its subdirectories.
+2. Reads each CSV file and extracts selected network traffic features.
+3. Categorizes the CSV files based on filenames.
+4. Appends a new column 'Label' to each dataframe with the category as its value.
+5. Combines all dataframes and saves to a new CSV file 'compiled.csv'.
