@@ -1,0 +1,46 @@
+i am still unable to ping from vm1 to external vm
+
+0. json file on the p4 mininet host machine
+{
+  "p4_src": "config.p4",
+  "cli": true,
+  "pcap_dump": true,
+  "enable_log": true,
+  "topology": {
+    "assignment_strategy": "l3",
+    "links": [["vm1", "s4"], ["vm2", "s4"], ["vm3", "s5"], ["vm4", "s5"], ["vm5", "s6"], ["vm6", "s6"], ["vm7", "s7"], ["vm8", "s7"], ["s4", "s2"], ["s5", "s2"], ["s6", "s2"], ["s7", "s2"], ["s4", "s3"], ["s5", "s3"], ["s6", "s3"], ["s7", "s3"], ["s2", "s1"], ["s3", "s1"]],
+    "hosts": {
+      "vm1": {
+      },
+      "vm2": {
+      },
+      "vm3": {
+      },
+      "vm4": {
+      },
+      "vm5": {
+      },
+      "vm6": {
+      },
+      "vm7": {
+      },
+      "vm8": {
+      }
+    },
+    "switches": {
+      "s1": {},
+      "s2": {},
+      "s3": {},
+      "s4": {},
+      "s5": {},
+      "s6": {},
+      "s7": {}
+    }
+  }
+}
+1. sudo p4run
+2. change ip of vm1 to be the same as external vm, 192.168.5.128. 
+3. change vm1 mac address to be the same as external vm
+4. test ping, fails
+
+ping goes through however upon further testing, the ping that goes through does not reach the other network. etc, external vm ping h2, wireshark on external vm does send out packet but wireshark on h1 does not sniff any packet sent out. 
