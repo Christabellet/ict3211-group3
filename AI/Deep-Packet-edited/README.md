@@ -7,7 +7,7 @@
 
 1. Ensure Python 3.x is installed.
 2. Ensure JAVA_HOME is set and added to system PATH.
-3. If using Windows, ensure HADOOP_HOME is set and added to system PATH, with %HADOOP_HOME%\bin containing the [winutils.exe](https://github.com/kontext-tech/winutils) file.
+3. If using Windows, ensure Hadoop is installed and HADOOP_HOME is set and added to system PATH, with %HADOOP_HOME%\bin containing the [winutils.exe](https://github.com/kontext-tech/winutils) file for the appropriate Hadoop version.
 
 ## NVIDIA CUDA
 
@@ -26,7 +26,7 @@ Install the other Python requirements from the requirements.txt file, not inclus
     pip install -r requirements.txt
 
 
-# Training Model
+# Dataset Preparation
 
 This section contains the steps for training the model.
 
@@ -44,6 +44,9 @@ This section contains the steps for training the model.
 ### Traffic Model
 
     python train_cnn.py -d train_test_data/traffic_classification/train.parquet -m model/traffic_classification.cnn.model -t traffic
+
+### Pretrained Models
+The pretrained models can be downloaded [here](https://drive.google.com/drive/folders/1Ctb6pxJlZCYZQepWbLRQ0CR7IiqaMDgO?usp=sharing).
 
 ## Evalutating Model
 Change the model and test data directory accordingly in the .ipynb file. 
