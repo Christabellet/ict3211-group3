@@ -1,12 +1,11 @@
-﻿# Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/03-L2_Basic_forwarding/thrift
+## Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/03-L2_Basic_forwarding/thrift
 #### This tutorial main objective is to implement a basic layer 2 forwarding switch. However, note that it uses static mapping of MAC addresses to port, as such, it's behaviour does not match a real life switch.  
 ## Packet Tracer Topology
-  
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/6bba1625-0d83-408f-8be2-59ef419a233e)
 ## P4 Mininet
-  
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/83f29cf4-ef89-4915-9c5e-c954586de80c)
 ## Flow Rules 
-  
-  
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/cd1527d0-aa36-4888-9317-b8a3349b74ea)
 ### 1. Dumping entry
 ``` The dumping entry shows the sequence of the packet information that is processed in the P4 switch. ```
 ### 2. Match key
@@ -16,7 +15,7 @@
 ### 4. Dumping default
 ```The dumping default will occur when there is no specific match found in the table, in this screenshot, it shows ‘NoAction’ which means that no action will be taken. ```
 ## Flow Chart
-  
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/0e8cbd59-a5ce-4ecf-88b1-f89df992958a)
 ### 1. Parser
 ```
 state start {
