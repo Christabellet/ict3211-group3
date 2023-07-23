@@ -162,12 +162,13 @@ def custom_collate_function(batch):
 
 
 def deep_packet_predict(source, target):
-    data_dir_path = Path(source)
+    data_path = Path(source)
     target_dir_path = Path(target)
     target_dir_path.mkdir(parents=True, exist_ok=True)
 
-    print(data_dir_path)
-    transformed = transform_pcap(data_dir_path, target_dir_path / (data_dir_path.name + ".transformed"))
+    print(data_path)
+    print(data_path.stem)
+    transformed = transform_pcap(data_path, target_dir_path / (data_path.name + ".transformed"))
 
     # for pcap_path in sorted(data_dir_path.iterdir()):
     #     print(pcap_path)
@@ -255,8 +256,8 @@ def deep_packet_predict(source, target):
 
     # print(five_tuple)
 
-    filename = str(datetime.datetime.now()
-                   .strftime("%Y-%m-%d_%H-%M-%S")) + "result.csv"
+    filename = str(data_path.stem) + "_" + str(datetime.datetime.now()
+                   .strftime("%Y-%m-%d_%H-%M-%S")) + "_result.csv"
 
     with open(target_dir_path / filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)

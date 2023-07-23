@@ -7,37 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <style>
+    <style>
         /* Add custom CSS styles here */
         body {
             display: flex;
             flex-direction: column;
             background-color: white;
-        }
-
-        #tableContainer {
-            flex: 3;
-            height: 100vh; /* Adjust the height of the table container as needed */
-            overflow: auto;
-        }
-
-        #pieChartContainer {
-            flex: 1; /* Set the flex property to 1 to occupy one-fourth of the available space */
-            height: 100vh; /* Adjust the height of the pie chart container as needed */
-            width: 25%; /* Limit the width to one-fourth of the available space */
-            margin-top: 80px; /* Add some margin to push the content below the fixed nav bar */
-        }
-
-        /* Style the table if desired */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
         }
     </style>
 </head>
@@ -53,55 +28,98 @@
         </div>
     </nav>
     <h1>Uploaded File Data</h1>
-    <p>File Name: {{ data[0]['App Label'] }}</p>
+    <p>File Name: {{ filename }}</p>
 
-    <!-- Create a scrollable area for the table -->
-    <div style="height: 400px; overflow: auto;">
+    <div id="tableContainerTalkers">
+        <h2>Top 5 Talkers</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Source IP</th>
-                    <th>Source Port</th>
-                    <th>Destination IP</th>
-                    <th>Destination Port</th>
-                    <th>Protocol</th>
-                    <th>App Label</th>
-                    <th>Traffic Label</th>
+                    <th>IP</th>
+                    <th>Frequency</th>
                 </tr>
             </thead>
             <tbody>
-                {% for row in data %}
+                {% for talker, frequency in top_talkers %}
                 <tr>
-                    <td>{{ row['Source IP'] }}</td>
-                    <td>{{ row['Source Port'] }}</td>
-                    <td>{{ row['Destination IP'] }}</td>
-                    <td>{{ row['Destination Port'] }}</td>
-                    <td>{{ row['Protocol'] }}</td>
-                    <td>{{ row['App Label'] }}</td>
-                    <td>{{ row['Traffic Label'] }}</td>
+                    <td>{{ talker }}</td>
+                    <td>{{ frequency }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    <div id="pieChartContainer">
-        <!-- Generate the pie chart using JavaScript -->
-        <canvas id="appLabelChart" width="400" height="400"></canvas>
+
+    <div id="tableContainerSource">
+        <h2>Top 5 Source IPs</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Source IP</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ip, frequency in top_source_ips %}
+                <tr>
+                    <td>{{ ip }}</td>
+                    <td>{{ frequency }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div id="tableContainerDestination">
+        <h2>Top 5 Destination IPs</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Destination IP</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ip, frequency in top_destination_ips %}
+                <tr>
+                    <td>{{ ip }}</td>
+                    <td>{{ frequency }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="chartsContainer">
+        <div class="chartBox">
+            <h2>Traffic Label Distribution</h2>
+            <!-- Generate the pie chart using JavaScript -->
+            <canvas id="trafficLabelChart" width="400" height="400"></canvas>
+        </div>
+        <!-- Check if "App Label" data is available and create the pie chart -->
+        {% if 'App Label' in data[0] %}
+        <div class="chartBox">
+            <!-- Add a label for the pie chart -->
+            <h2>Application Label Distribution</h2>
+
+            <!-- Generate the pie chart for "Traffic Label" using JavaScript -->
+            <canvas id="appLabelChart" width="400" height="400"></canvas>
+        </div>
+        {% endif %}
     </div>
     <script>
         const data = {{ data|tojson }};
-        const appLabels = Array.from(new Set(data.map(row => row['App Label'])));
-        const appLabelCounts = appLabels.map(label => data.filter(row => row['App Label'] === label).length);
+        const trafficLabels = Array.from(new Set(data.map(row => row['Traffic Label'])));
+        const trafficLabelCounts = trafficLabels.map(label => data.filter(row => row['Traffic Label'] === label).length);
 
-        const colors = getRandomColors(appLabels.length); // Function to generate random colors
+        const colors = getRandomColors(trafficLabels.length); // Function to generate random colors
 
-        const ctx = document.getElementById('appLabelChart').getContext('2d');
+        const ctx = document.getElementById('trafficLabelChart').getContext('2d');
         new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: appLabels,
+                labels: trafficLabels,
                 datasets: [{
-                    data: appLabelCounts,
+                    data: trafficLabelCounts,
                     backgroundColor: colors,
                     borderWidth: 1,
                 }]
@@ -109,10 +127,34 @@
             options: {
                 title: {
                     display: true,
-                    text: 'Percentage of Rows by App Label',
+                    text: 'Percentage of Rows by Traffic Label',
                 },
             },
         });
+
+        {% if 'App Label' in data[0] %}
+            const appLabels = Array.from(new Set(data.map(row => row['App Label'])));
+            const appLabelCounts = appLabels.map(label => data.filter(row => row['App Label'] === label).length);
+
+            const appLabelChartCtx = document.getElementById('appLabelChart').getContext('2d');
+            new Chart(appLabelChartCtx, {
+                type: 'pie',
+                data: {
+                    labels: appLabels,
+                    datasets: [{
+                        data: appLabelCounts,
+                        backgroundColor: getRandomColors(trafficLabels.length),
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'App Label Distribution',
+                    },
+                },
+            });
+        {% endif %}
 
         function getRandomColors(count) {
             const colors = [];
@@ -130,6 +172,9 @@
             const b = Math.floor(Math.random() * 256);
             return `rgb(${r}, ${g}, ${b})`;
         }
+        const pieChartTitle = document.createElement('h2');
+        pieChartTitle.textContent = 'Application Distribution';
+        document.getElementById('pieChartContainer').prepend(pieChartTitle);
     </script>
 </body>
 </html>

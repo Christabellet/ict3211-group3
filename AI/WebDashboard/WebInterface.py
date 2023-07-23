@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
 import csv
+from collections import Counter
 from werkzeug.utils import secure_filename
 from deep_packet_src.prediction import deep_packet_predict
 
@@ -15,6 +16,7 @@ app.config['PROCESSED_FOLDER'] = PROCESSED_FOLDER
 
 ALLOWED_EXTENSIONS = {'pcap', 'pcapng'}
 
+
 def check_pcap_or_pcapng(file_path):
     with open(file_path, "rb") as f:
         # Read the first 4 bytes of the file
@@ -27,10 +29,33 @@ def check_pcap_or_pcapng(file_path):
         return "PCAPNG"
     else:
         return False
-    
 
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def get_top_talkers(csv_filename, n=5):
+    # Read the CSV file and calculate the frequency of each talker
+    talker_frequency = Counter()
+    with open(csv_filename, 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            talker_frequency[row['Source IP']] += 1
+            talker_frequency[row['Destination IP']] += 1
+
+    # Get the top n talkers
+    top_talkers = talker_frequency.most_common(n)
+    return top_talkers
+
+
+def get_top_ips(csv_filename, field_name, n=5):
+    # Read the CSV file and calculate the frequency of the given field (e.g., Source IP or Destination IP)
+    field_frequency = Counter()
+    with open(csv_filename, 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            field_frequency[row[field_name]] += 1
+
+    # Get the top n IPs for the given field
+    top_ips = field_frequency.most_common(n)
+    return top_ips
 
 
 @app.route('/')
@@ -71,7 +96,7 @@ def upload():
     elif request.form.get('function') == "packet":
         # Process the uploaded file and save the processed data as a new CSV file
         # processed_filename = deep_packet_predict(os.path.join(app.config['UPLOAD_FOLDER'], filename), app.config['PROCESSED_FOLDER'])
-        processed_filename = 'processed/2023-07-23_23-15-45result.csv'
+        processed_filename = 'processed/YouTube_Afif_2023-07-24_02-28-24_result_TrafficOnly.csv'
         # Read the CSV file into a list of dictionaries
         csv_data = []
         with open(processed_filename, 'r') as csvfile:
@@ -79,8 +104,18 @@ def upload():
             for row in reader:
                 csv_data.append(row)
 
+        # Get the top 5 talkers, source IPs, and destination IPs from the processed CSV file
+        top_talkers = get_top_talkers(processed_filename, n=5)
+        top_source_ips = get_top_ips(processed_filename, 'Source IP', n=5)
+        top_destination_ips = get_top_ips(processed_filename, 'Destination IP', n=5)
+
         # Redirect to the route that displays the contents of the processed CSV file
-        return render_template('display.html', data=csv_data)
+        return render_template('display.html',
+                               data=csv_data,
+                               filename=filename,
+                               top_talkers=top_talkers,
+                               top_source_ips=top_source_ips,
+                               top_destination_ips=top_destination_ips)
 
 
 if __name__ == '__main__':

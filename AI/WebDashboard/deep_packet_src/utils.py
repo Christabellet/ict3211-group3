@@ -7,6 +7,130 @@ from scapy.utils import PcapReader
 
 # for app identification
 PREFIX_TO_APP_ID = {
+    # csgo
+    "csgo2023_1": 0,
+    # discord
+    "discord2023_audio_1": 1,
+    "discord2023_audio_video_1": 1,
+    "discord2023_chat_1": 1,
+    "discord2023_chat_2": 1,
+    "discord2023_chat_3": 1,
+    "discord2023_download_1": 1,
+    "discord2023_upload_1": 1,
+    # Email, ISCX2016 dataset
+    "email1a": 2,
+    "email1b": 2,
+    "email2a": 2,
+    "email2b": 2,
+    # FTPS, ISCX2016 dataset
+    "ftps_down_1a": 3,
+    "ftps_down_1b": 3,
+    "ftps_up_2a": 3,
+    "ftps_up_2b": 3,
+    # Netflix
+    "netflix2023_1": 4,
+    "netflix2023_2": 4,
+    "netflix2023_3": 4,
+    "netflixgame": 4,
+    # SFTP
+    "sftp1": 5,
+    "sftp_down_3a": 5,
+    "sftp_down_3b": 5,
+    "sftp_up_2a": 5,
+    "sftp_up_2b": 5,
+    "sftpdown1": 5,
+    "sftpdown2": 5,
+    "sftpup1": 5,
+    # Spotify
+    "spotify2023_1": 6,
+    "spotify2023_2": 6,
+    # Teams
+    "teams_chat": 7,
+    "teams_download_upload_chat": 7,
+    "teams_download": 7,
+    "teams_upload": 7,
+    "teams2023_audio_video_1": 7,
+    # Valorant
+    "valorant2023_1": 8,
+    # Vimeo
+    "vimeo2023_1": 9,
+    # Youtube
+    "youtube2023_1": 10,
+    "youtube2023_2": 10,
+}
+
+ID_TO_APP = {
+    0: "CSGO",
+    1: "Discord",
+    2: "Email",
+    3: "FTPS",
+    4: "Netflix",
+    5: "SFTP",
+    6: "Spotify",
+    7: "Teams",
+    8: "Valorant",
+    9: "Vimeo",
+    10: "Youtube"
+}
+
+PREFIX_TO_TRAFFIC_ID = {
+    # Chat
+    "discord2023_chat_1": 0,
+    "discord2023_chat_2": 0,
+    "discord2023_chat_3": 0,
+    "teams_chat": 0,
+    # Email
+    "email1a": 1,
+    "email1b": 1,
+    "email2a": 1,
+    "email2b": 1,
+    # File Transfer
+    "discord2023_download_1": 2,
+    "discord2023_upload_1": 2,
+    "ftps_down_1a": 2,
+    "ftps_down_1b": 2,
+    "ftps_up_2a": 2,
+    "ftps_up_2b": 2,
+    "sftp1": 2,
+    "sftp_down_3a": 2,
+    "sftp_down_3b": 2,
+    "sftp_up_2a": 2,
+    "sftp_up_2b": 2,
+    "sftpdown1": 2,
+    "sftpdown2": 2,
+    "sftpup1": 2,
+    "teams_download_upload_chat": 2,
+    "teams_download": 2,
+    "teams_upload": 2,
+    # Streaming
+    "netflix2023_1": 3,
+    "netflix2023_2": 3,
+    "netflix2023_3": 3,
+    "spotify2023_1": 3,
+    "spotify2023_2": 3,
+    "vimeo2023_1": 3,
+    "youtube2023_1": 3,
+    "youtube2023_2": 3,
+    # VoIP
+    "discord2023_audio_1": 4,
+    "discord2023_audio_video_1": 4,
+    "teams2023_audio_video_1": 4,
+    # Gaming
+    "csgo2023_1": 5,
+    "netflixgame": 5,
+    "valorant2023_1": 5
+}
+
+ID_TO_TRAFFIC = {
+    0: "Chat",
+    1: "Email",
+    2: "File Transfer",
+    3: "Streaming",
+    4: "Voip",
+    5: "Gaming"
+}
+
+PREFIX_TO_APP_ID_OLD = {
     # AIM chat
     "aim_chat_3a": 0,
     "aim_chat_3b": 0,
@@ -120,7 +244,7 @@ PREFIX_TO_APP_ID = {
     "youtube2023_2": 14,
 }
 
-ID_TO_APP = {
+ID_TO_APP_OLD = {
     0: "AIM Chat",
     1: "Email",
     2: "Facebook",
@@ -250,7 +374,7 @@ ID_TO_APP_VNAT = {
 }
 
 # for traffic identification
-PREFIX_TO_TRAFFIC_ID = {
+PREFIX_TO_TRAFFIC_ID_OLD = {
     # Chat
     "aim_chat_3a": 0,
     "aim_chat_3b": 0,
@@ -392,7 +516,7 @@ PREFIX_TO_TRAFFIC_ID = {
     # "vpn_voipbuster1b": 10,
 }
 
-ID_TO_TRAFFIC = {
+ID_TO_TRAFFIC_OLD = {
     0: "Chat",
     1: "Email",
     2: "File Transfer",

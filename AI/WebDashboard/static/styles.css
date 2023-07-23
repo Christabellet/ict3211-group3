@@ -81,3 +81,56 @@ body p {
     height: 50px;
     margin-bottom: 20px;
 }
+
+#radioContainer {
+    display: flex;
+    flex-direction: column; /* Display radio buttons vertically (up and down) */
+    margin-top: 10px;
+    margin-bottom: 10px; /* Add some spacing between radio buttons and the submit button */
+}
+
+#radioContainer input[type="radio"] {
+    margin-right: 5px; /* Add some spacing between the radio button and the label */
+}
+
+#tableContainer {
+    flex: 3;
+    height: 100vh; /* Adjust the height of the table container as needed */
+    overflow: auto;
+}
+
+#pieChartContainer {
+    flex: 1; /* Set the flex property to 1 to occupy one-fourth of the available space */
+    height: 100vh; /* Adjust the height of the pie chart container as needed */
+    width: 25%; /* Limit the width to one-fourth of the available space */
+    margin-top: 80px; /* Add some margin to push the content below the fixed nav bar */
+}
+
+/* Style the table if desired */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+#chartsContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.chartBox {
+    flex: 1;
+    max-width: 300px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
