@@ -1,13 +1,12 @@
-# Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/08-Simple_Routing/thrift
+## Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/08-Simple_Routing/thrift
 #### This tutorial main objective is to implement a control plane that is dynamic instead of manually specifying each forwarding table statically. 
 #### For this tutorial reference, we break down the routing-controller.py instead of the everything as it is a copy of the ECMP tutorial except for this python file replacing the static sw-commands.txt files. So this python file is what we will be focusing on, for this tutorial. 
 ## Packet Tracer Topology
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/5bdf03fb-1712-4691-8702-b5e8db7783f8)
 ## P4 Mininet
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/95d7d9a4-d309-4178-8bf0-d1676e0c22af)
 #### Here we can see that the ping request and reply from both h1 and h2 are able to reach each other after running the routing controller python file. This python file is to provide a control plane dynamically instead of manually declaring the forwarding table using sw-commands.txt files. 
-
-### Routing-controller.py 
+### [Routing-controller.py](https://github.com/PototoPatata/ict3211-group3/blob/main/P4%20Mininet/P4_Mininet_tutorial_references/07-Simple_routing/routing-controller.py)
 ```
 from p4utils.utils.helper import load_topo
 from p4utils.utils.sswitch_thrift_API import SimpleSwitchThriftAPI
