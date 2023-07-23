@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Display</title>
+        <style>
+        /* Add custom CSS styles here */
+        body {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #tableContainer {
+            flex: 3;
+            height: 100vh; /* Adjust the height of the table container as needed */
+            overflow: auto;
+        }
+
+        #pieChartContainer {
+            flex: 1;
+            height: 100vh; /* Adjust the height of the pie chart container as needed */
+        }
+
+        /* Style the table if desired */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Uploaded File Data</h1>
+    <p>File Name: {{ data[0]['App Label'] }}</p>
+
+    <!-- Create a scrollable area for the table -->
+    <div style="height: 400px; overflow: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Source IP</th>
+                    <th>Source Port</th>
+                    <th>Destination IP</th>
+                    <th>Destination Port</th>
+                    <th>Protocol</th>
+                    <th>App Label</th>
+                    <th>Traffic Label</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row['Source IP'] }}</td>
+                    <td>{{ row['Source Port'] }}</td>
+                    <td>{{ row['Destination IP'] }}</td>
+                    <td>{{ row['Destination Port'] }}</td>
+                    <td>{{ row['Protocol'] }}</td>
+                    <td>{{ row['App Label'] }}</td>
+                    <td>{{ row['Traffic Label'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="pieChartContainer">
+        <!-- Generate the pie chart using JavaScript -->
+        <canvas id="appLabelChart" width="400" height="400"></canvas>
+    </div>
+    <script>
+        const data = {{ data|tojson }};
+        const appLabels = Array.from(new Set(data.map(row => row['App Label'])));
+        const appLabelCounts = appLabels.map(label => data.filter(row => row['App Label'] === label).length);
+
+        const colors = getRandomColors(appLabels.length); // Function to generate random colors
+
+        const ctx = document.getElementById('appLabelChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: appLabels,
+                datasets: [{
+                    data: appLabelCounts,
+                    backgroundColor: colors,
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Percentage of Rows by App Label',
+                },
+            },
+        });
+
+        function getRandomColors(count) {
+            const colors = [];
+            for (let i = 0; i < count; i++) {
+                const color = getRandomColor();
+                colors.push(color);
+            }
+            return colors;
+        }
+
+        function getRandomColor() {
+            // Generate a random RGB color
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+    </script>
+</body>
+</html>

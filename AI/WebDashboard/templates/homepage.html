@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Upload</title>
+</head>
+<body>
+    <h1>Upload a File</h1>
+    <form id="uploadForm" method="post" action="/upload" enctype="multipart/form-data">
+        <div class='textCenter'>
+            <label for="file">File (PCAP files only):</label>&nbsp;
+            <input type="file" id="fileInput" name="file" accept=".pcap, .pcapng"><br>
+        </div>
+        <input type="submit" value="Upload" class="submitButton">
+    </form>
+</body>
+</html>

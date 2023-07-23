@@ -1,9 +1,10 @@
+import datetime
 import os
 import sys
 from pathlib import Path
 from collections import Counter
 
-import multiprocessing
+# import multiprocessing
 
 import click
 import datasets
@@ -160,37 +161,19 @@ def custom_collate_function(batch):
     return transformed_batch
 
 
-@click.command()
-@click.option(
-    "-s",
-    "--source",
-    help="path to the directory containing raw pcap files",
-    required=True,
-)
-@click.option(
-    "-t",
-    "--target",
-    help="path to the directory for persisting preprocessed files",
-    required=True,
-)
-@click.option("-n", "--njob", default=-1, help="num of executors", type=int)
-def main(source, target, njob):
+def deep_packet_predict(source, target):
     data_dir_path = Path(source)
     target_dir_path = Path(target)
     target_dir_path.mkdir(parents=True, exist_ok=True)
 
-    if njob == 1:
-        for pcap_path in sorted(data_dir_path.iterdir()):
-            transformed = transform_pcap(
-                pcap_path, target_dir_path / (pcap_path.name + ".transformed")
-            )
-    else:
-        transformed = zip(*Parallel(n_jobs=njob)(
-            delayed(transform_pcap)(
-                pcap_path, target_dir_path / (pcap_path.name + ".transformed")
-            )
-            for pcap_path in sorted(data_dir_path.iterdir())
-        ))
+    print(data_dir_path)
+    transformed = transform_pcap(data_dir_path, target_dir_path / (data_dir_path.name + ".transformed"))
+
+    # for pcap_path in sorted(data_dir_path.iterdir()):
+    #     print(pcap_path)
+    #     transformed = transform_pcap(
+    #         pcap_path, target_dir_path / (pcap_path.name + ".transformed")
+    #     )
 
     # print(type(transformed))
     # print(transformed)
@@ -212,21 +195,13 @@ def main(source, target, njob):
 
     print(traffic_model.eval())
     print("Traffic model loaded in")
-    # print(df)
-    # print(type(df))
-
-    # for item in df:
-    #     print(item[0])
-    #     print(type(item[0]))
-    #     print(item[1])
-    #     print(type(item[1]))
 
     dataset = Dataset.from_pandas(df)
 
-    try:
-        num_workers = multiprocessing.cpu_count()
-    except:
-        num_workers = 1
+    # try:
+    #     num_workers = multiprocessing.cpu_count()
+    # except:
+    num_workers = 0
     dataloader = DataLoader(
         dataset,
         batch_size=2048,
@@ -252,12 +227,6 @@ def main(source, target, njob):
             # for k = 1
             _, preds_app = torch.max(y_pred_app, 1)
             _, preds_traffic = torch.max(y_pred_traffic, 1)
-
-            # for k = 3
-            # test, preds = torch.topk(y_pred, k=3)
-
-            # print("preds before numpy")
-            # print(preds)
 
             preds_app = preds_app.cpu().numpy()
             preds_app = preds_app.tolist()
@@ -286,12 +255,14 @@ def main(source, target, njob):
 
     # print(five_tuple)
 
-    with open(target_dir_path / "output.csv", 'w', newline='') as csvfile:
+    filename = str(datetime.datetime.now()
+                   .strftime("%Y-%m-%d_%H-%M-%S")) + "result.csv"
+
+    with open(target_dir_path / filename, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['Source IP', 'Source Port', 'Destination IP', 'Destination Port', 'Protocol', 'App Label', 'Traffic Label'])
         writer.writerows(five_tuple)
     print("written to file")
 
+    return target_dir_path / filename
 
-if __name__ == "__main__":
-    main()
