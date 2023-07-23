@@ -1,29 +1,22 @@
-﻿# Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/04-L2_Learning/thrift
+﻿## Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/04-L2_Learning/thrift
 #### This tutorial main objective is to implement the capability to learn MAC address to port mapping like a actual layer 2 switch. 
 #### The difference between `digest` and `cpu` is that `disgest` packet contain only partial data to save resources while `cpu` packet uses the full packet. As we are currently only on the tutorial and are not as picky about resources, we will be using `cpu` solution. 
 ## Packet Tracer Topology
-  
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/928fe757-d84d-44af-9c14-0e45b2d71a07)
 ## P4 Mininet
-  
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/dc25f2ae-c8b9-4499-be5d-d845e47478b1)
 ## Flow Rules 
-  
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/a701ef32-df73-41c9-af90-357479dbf6b1)
 ### Before ‘l2_learning_controller.py’ is executed. 
-  
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/1fbc0f03-f351-4c6a-bac6-b9f35b26a760)
 ### After ‘l2_learning_controller.py’ is executed. 
-  
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/70ea90c3-9060-425a-82ae-ee3537170368)
 ### Before pingall command is sent
-  
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/c417abdf-592c-4d78-8425-96f407c5aa91)
 ### After pingall command is sent. 
 #### The flow rules of the switch will first go through the smac table to find the source MAC address of the packet, then go through the dmac table to find the destination MAC address of the packet, and will apply the broadcast table if needed. 
 ## Flow Chart
-  
-
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/62399df5-dc36-4e8e-a768-3bab6d8a514d)
 ### 1. Parser 
 ```
 state start {
