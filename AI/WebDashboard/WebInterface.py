@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
 import csv
 from werkzeug.utils import secure_filename
-#from prediction import deep_packet_predict
+from deep_packet_src.prediction import deep_packet_predict
 
 
 app = Flask(__name__)
@@ -64,20 +64,23 @@ def upload():
         pass
     
     # Extract flow from PCAP code here
-    return "PCAP" # To remove
-    
-    # # Process the uploaded file and save the processed data as a new CSV file
-    # processed_filename = deep_packet_predict(os.path.join(app.config['UPLOAD_FOLDER'], filename), app.config['PROCESSED_FOLDER'])
+    # return "PCAP" # To remove
+    if request.form.get('function') == "flow":
+        return "FLOW"
 
-    # # Read the CSV file into a list of dictionaries
-    # csv_data = []
-    # with open(processed_filename, 'r') as csvfile:
-    #     reader = csv.DictReader(csvfile)
-    #     for row in reader:
-    #         csv_data.append(row)
+    elif request.form.get('function') == "packet":
+        # Process the uploaded file and save the processed data as a new CSV file
+        # processed_filename = deep_packet_predict(os.path.join(app.config['UPLOAD_FOLDER'], filename), app.config['PROCESSED_FOLDER'])
+        processed_filename = 'processed/2023-07-23_23-15-45result.csv'
+        # Read the CSV file into a list of dictionaries
+        csv_data = []
+        with open(processed_filename, 'r') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                csv_data.append(row)
 
-    # # Redirect to the route that displays the contents of the processed CSV file
-    # return render_template('display.html', data=csv_data)
+        # Redirect to the route that displays the contents of the processed CSV file
+        return render_template('display.html', data=csv_data)
 
 
 if __name__ == '__main__':

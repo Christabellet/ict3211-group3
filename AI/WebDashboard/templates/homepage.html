@@ -25,6 +25,12 @@
         <p>Drag and drop files here...</p>
         <form method="post" action="/upload" enctype="multipart/form-data">
             <input type="file" name="file" id="file" multiple><br>
+            <label for="function-pcap">Flow Prediction</label>
+            <input type="radio" id="function-pcap" name="function" value="flow" checked>
+
+            <label for="function-prediction">Packet Prediction</label>
+            <input type="radio" id="function-prediction" name="function" value="packet">
+
             <input type="submit" value="Upload">
         </form>
     </div>

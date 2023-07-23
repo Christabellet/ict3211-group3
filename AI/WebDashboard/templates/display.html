@@ -2,6 +2,10 @@
 <html>
 <head>
     <title>File Display</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
         <style>
         /* Add custom CSS styles here */
         body {
@@ -35,6 +39,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <nav>
+        <div id="logo">
+            <a href="/"><img id="navbar-logo" src="/static/navbar_logo.png" alt="Navbar logo"></a>
+            <a href="/"><h1>ML Classifier</h1></a>
+        </div>
+        <div id="nav-links">
+            <a href="#">Documentation</a>
+            <!-- Add more links as needed -->
+        </div>
+        <img id="top-image" src="/static/top_image.png" alt="Top image">
+    </nav>
     <h1>Uploaded File Data</h1>
     <p>File Name: {{ data[0]['App Label'] }}</p>
 
