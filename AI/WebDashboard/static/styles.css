@@ -1,0 +1,80 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+    color: white;
+    padding: 0; /* Reduced padding for smaller navbar */
+    border-bottom: 2px solid #92A8D1;
+}
+
+body {
+    background-color: #34568B;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body p {
+    font-family: 'Roboto', sans-serif;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+}
+
+#logo a {
+    color: white;
+    text-decoration: none;
+}
+
+#logo h1 {
+    margin-left: 10px; /* Shift text to the left */
+}
+
+#navbar-logo {
+    width: 40px;  /* Reduced size for smaller navbar */
+    height: 40px; /* Reduced size for smaller navbar */
+    margin-right: 5px; /* Reduced margin for smaller navbar */
+}
+
+#nav-links {
+    display: flex;
+    align-items: center;
+    margin-right: 15px; /* Adjust this value as per your requirement */
+}
+
+#nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+
+#top-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+
+#drop-zone.highlight {
+    background-color: #666;
+}
+
+#drop-zone {
+    width: 400px;
+    height: 200px;
+    padding: 30px;
+    border: 2px dashed darkgray;
+    color: black;
+    text-align: center;
+    margin: 10px auto;
+    background-color: #34568B;
+}
+
+#upload-logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+}

@@ -2,15 +2,31 @@
 <html>
 <head>
     <title>File Upload</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+    <script src="/static/script.js"></script>
 </head>
 <body>
-    <h1>Upload a File</h1>
-    <form id="uploadForm" method="post" action="/upload" enctype="multipart/form-data">
-        <div class='textCenter'>
-            <label for="file">File (PCAP files only):</label>&nbsp;
-            <input type="file" id="fileInput" name="file" accept=".pcap, .pcapng"><br>
+    <nav>
+        <div id="logo">
+            <a href="/"><img id="navbar-logo" src="/static/navbar_logo.png" alt="Navbar logo"></a>
+            <a href="/"><h1>ML Classifier</h1></a>
         </div>
-        <input type="submit" value="Upload" class="submitButton">
-    </form>
+        <div id="nav-links">
+            <a href="#">Documentation</a>
+            <!-- Add more links as needed -->
+        </div>
+    </nav>
+    <img id="top-image" src="/static/top_image.png" alt="Top image">
+    <div id="drop-zone" ondrop="dropHandler(event);"  ondragover="dragOverHandler(event);">
+        <img id="upload-logo" src="/static/upload_logo.png" alt="Upload logo">
+        <p>Drag and drop files here...</p>
+        <form method="post" action="/upload" enctype="multipart/form-data">
+            <input type="file" name="file" id="file" multiple><br>
+            <input type="submit" value="Upload">
+        </form>
+    </div>
 </body>
 </html>
