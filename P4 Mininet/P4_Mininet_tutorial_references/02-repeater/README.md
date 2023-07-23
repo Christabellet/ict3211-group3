@@ -1,11 +1,11 @@
-﻿# Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/02-Repeater/thrift 
+![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/628c64e3-90aa-4cc6-9da6-c2eed601df66)﻿## Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/02-Repeater/thrift 
 #### This tutorial main objectives is to make a switch act as a packet repeater between two hosts. 
 ## Packet Tracer Topology
-  
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/72b263d6-457b-458e-b762-0342e09f9e4f)
 ## P4 Mininet
-  
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/fa9a4825-769c-4514-a862-c3a763eca4b4)
 ## Flow Chart
-  
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/b2b011a7-59ff-40d1-b886-484c7d3abfbf)
 ### 1. Parser 
 ```
 state start {
