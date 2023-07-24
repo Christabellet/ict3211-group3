@@ -25,7 +25,7 @@ The parser block `MyParser` takes in 4 parameters `packet_in packet`, `out heade
 ```
 This command defines the start of the parser. It represents the transmission of the packet into the ‘accept’ state. 
 
-### 1. Ingress Processing
+### 2. Ingress Processing
 ```
 control MyIngress(inout headers hdr,
                   inout metadata meta,
