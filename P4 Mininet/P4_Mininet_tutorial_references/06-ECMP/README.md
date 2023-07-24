@@ -1,4 +1,4 @@
-![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/8980155a-8668-419a-897a-c7f4a8c34847)﻿## Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/05-ECMP
+## Tutorial Link: https://github.com/nsg-ethz/p4-learning/tree/master/exercises/05-ECMP
 #### This tutorial main objective is to implement a layer 3 load balancing traffic across multiple equal cost path. 
 ## Packet Tracer Topology
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/e8363d25-57b7-4144-9d77-467bb574bd64)
