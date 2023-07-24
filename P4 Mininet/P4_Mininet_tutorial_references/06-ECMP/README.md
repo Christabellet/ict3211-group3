@@ -8,9 +8,8 @@
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/6d70e124-f668-434f-89fd-71d4f9c63b1f)
 #### Here by simply sending slightly more packets, we are able to simulate the ECMP load balancing. 
 ## Flow Rules
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/e228d749-12d6-4b4c-840e-923119d08e4e)
-#### The flow rules of the switch will first go through ipv4_lpm table including forwarding to the next hop, forwarding to an ECMP group, or dropping the packet. 
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/214bb5ee-585b-4c52-9762-52876001d71d)
+#### The flow rules of the switch will first go through ipv4_lpm table including forwarding to the next hop, forwarding to an ECMP group, or dropping the packet. 
 #### If the flow rules dictate that the ecmp_group_to_nhop is used, it will determine the next hop for the packet that belongs to a specific ECMP group, `scalars.userMetadata.ecmp_group_id`, based on their calculated hash values, `scalars.userMetadata.ecmp_hash`. The table will map both the ECMP group identifier and hash value to the specific next hop identifier, in this way, it allows the switch to perform some sort of load balancing across multiple paths with equal cost. 
 ## Flow Chart
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/5dc81337-9b19-467d-ba11-10a753ff83bb)
