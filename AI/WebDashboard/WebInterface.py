@@ -1,3 +1,5 @@
+from itertools import groupby
+
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
 import csv
@@ -45,17 +47,18 @@ def get_top_talkers(csv_filename, n=5):
     return top_talkers
 
 
-def get_top_ips(csv_filename, field_name, n=5):
-    # Read the CSV file and calculate the frequency of the given field (e.g., Source IP or Destination IP)
-    field_frequency = Counter()
-    with open(csv_filename, 'r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            field_frequency[row[field_name]] += 1
+def get_top_ip_combinations(csv_filename, n=5):
+    ip_combinations = []
+    with open(csv_filename, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            ip_combinations.append((row['Source IP'], row['Destination IP']))
 
-    # Get the top n IPs for the given field
-    top_ips = field_frequency.most_common(n)
-    return top_ips
+    sorted_combinations = sorted(ip_combinations)
+    ip_counts = {key: len(list(group)) for key, group in groupby(sorted_combinations)}
+
+    top_combinations = dict(Counter(ip_counts).most_common(n))
+    return top_combinations
 
 
 @app.route('/')
@@ -96,7 +99,7 @@ def upload():
     elif request.form.get('function') == "packet":
         # Process the uploaded file and save the processed data as a new CSV file
         # processed_filename = deep_packet_predict(os.path.join(app.config['UPLOAD_FOLDER'], filename), app.config['PROCESSED_FOLDER'])
-        processed_filename = 'processed/YouTube_Afif_2023-07-24_02-28-24_result_TrafficOnly.csv'
+        processed_filename = 'processed/netflix_test_2023-07-24_10-37-40_result.csv'
         # Read the CSV file into a list of dictionaries
         csv_data = []
         with open(processed_filename, 'r') as csvfile:
@@ -106,16 +109,14 @@ def upload():
 
         # Get the top 5 talkers, source IPs, and destination IPs from the processed CSV file
         top_talkers = get_top_talkers(processed_filename, n=5)
-        top_source_ips = get_top_ips(processed_filename, 'Source IP', n=5)
-        top_destination_ips = get_top_ips(processed_filename, 'Destination IP', n=5)
+        top_ip_combinations = get_top_ip_combinations(processed_filename, n=5)
 
         # Redirect to the route that displays the contents of the processed CSV file
         return render_template('display.html',
                                data=csv_data,
                                filename=filename,
                                top_talkers=top_talkers,
-                               top_source_ips=top_source_ips,
-                               top_destination_ips=top_destination_ips)
+                               top_ip_combinations=top_ip_combinations)
 
 
 if __name__ == '__main__':

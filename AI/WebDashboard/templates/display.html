@@ -50,40 +50,22 @@
         </table>
     </div>
 
-    <div id="tableContainerSource">
-        <h2>Top 5 Source IPs</h2>
+    <h2>Top 5 Source IP and Destination IP Combinations</h2>
+    <div>
         <table>
             <thead>
                 <tr>
                     <th>Source IP</th>
-                    <th>Frequency</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ip, frequency in top_source_ips %}
-                <tr>
-                    <td>{{ ip }}</td>
-                    <td>{{ frequency }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <div id="tableContainerDestination">
-        <h2>Top 5 Destination IPs</h2>
-        <table>
-            <thead>
-                <tr>
                     <th>Destination IP</th>
                     <th>Frequency</th>
                 </tr>
             </thead>
             <tbody>
-                {% for ip, frequency in top_destination_ips %}
+                {% for combination, count in top_ip_combinations.items() %}
                 <tr>
-                    <td>{{ ip }}</td>
-                    <td>{{ frequency }}</td>
+                    <td>{{ combination[0] }}</td>
+                    <td>{{ combination[1] }}</td>
+                    <td>{{ count }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

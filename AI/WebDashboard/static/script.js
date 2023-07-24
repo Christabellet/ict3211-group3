@@ -27,3 +27,21 @@ function dropHandler(ev) {
     // Prevent default behavior (Prevent file from being opened)
     ev.preventDefault();
   }
+
+
+function getRandomColors(count) {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+        const color = getRandomColor();
+        colors.push(color);
+    }
+    return colors;
+}
+
+function getRandomColor() {
+    // Generate a random RGB color
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
