@@ -94,22 +94,31 @@ body p {
 }
 
 #tableContainer {
-    flex: 3;
+    flex: 2;
     height: 100vh; /* Adjust the height of the table container as needed */
     overflow: auto;
+    padding: 20px;
+    max-width: 66.66%;
 }
 
 #pieChartContainer {
-    flex: 1; /* Set the flex property to 1 to occupy one-fourth of the available space */
+    flex: 1;  Set the flex property to 1 to occupy one-fourth of the available space */
     height: 100vh; /* Adjust the height of the pie chart container as needed */
-    width: 25%; /* Limit the width to one-fourth of the available space */
+    width: 33%; /* Limit the width to one-third of the available space */
     margin-top: 80px; /* Add some margin to push the content below the fixed nav bar */
+}
+
+h1, h2, h3 {
+    margin: 0 auto; /* Center the container horizontally */
 }
 
 /* Style the table if desired */
 table {
-    width: 100%;
+    width: 85%;
     border-collapse: collapse;
+    padding: 8px;
+    margin: 0 auto; /* Center the container horizontally */
+    margin-top: 15px;
 }
 
 th, td {
@@ -133,4 +142,9 @@ th, td {
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+}
+
+caption {
+    font-size: 20px; /* Increase the font size to 20 pixels */
+    font-weight: bold; /* Make the caption text bold */
 }

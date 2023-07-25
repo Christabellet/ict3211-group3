@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>File Display</title>
+    <title>Prediction Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
@@ -27,32 +27,40 @@
             <!-- Add more links as needed -->
         </div>
     </nav>
-    <h1>Uploaded File Data</h1>
-    <p>File Name: {{ filename }}</p>
+    <h1>Prediction Dashboard</h1>
+    <h3>File Name: {{ filename }}</h3>
 
-    <div id="tableContainerTalkers">
-        <h2>Top 5 Talkers</h2>
+
+    <div>
         <table>
+            <caption style="text-align: left;">Top 5 Talkers Table</caption>
             <thead>
                 <tr>
-                    <th>IP</th>
+                    <th>Source IP</th>
+                    <th>Destination IP</th>
                     <th>Frequency</th>
+                    <th>Most Frequent Traffic</th>
+                    <th>Most Frequent App Label</th>
                 </tr>
             </thead>
             <tbody>
-                {% for talker, frequency in top_talkers %}
+                {% for talker, data in top_talkers.items() %}
                 <tr>
-                    <td>{{ talker }}</td>
-                    <td>{{ frequency }}</td>
+                    <td>{{ talker.split(' -> ')[0] }}</td>
+                    <td>{{ talker.split(' -> ')[1] }}</td>
+                    <td>{{ data['Frequency'] }}</td>
+                    <td>{{ data['Traffic'] }}</td>
+                    <td>{{ data['App Label'] }}</td>
                 </tr>
+                <!-- Add two more rows for most frequent traffic and app label -->
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
-    <h2>Top 5 Source IP and Destination IP Combinations</h2>
+<!--    <h2>Top 5 Source IP and Destination IP Combinations</h2>-->
     <div>
         <table>
+            <caption style="text-align: left;">Top 5 Source IP and Destination IP Combinations</caption>
             <thead>
                 <tr>
                     <th>Source IP</th>
@@ -75,7 +83,7 @@
         <div class="chartBox">
             <h2>Traffic Label Distribution</h2>
             <!-- Generate the pie chart using JavaScript -->
-            <canvas id="trafficLabelChart" width="400" height="400"></canvas>
+            <canvas id="trafficLabelChart" width="500" height="500"></canvas>
         </div>
         <!-- Check if "App Label" data is available and create the pie chart -->
         {% if 'App Label' in data[0] %}
@@ -84,7 +92,7 @@
             <h2>Application Label Distribution</h2>
 
             <!-- Generate the pie chart for "Traffic Label" using JavaScript -->
-            <canvas id="appLabelChart" width="400" height="400"></canvas>
+            <canvas id="appLabelChart" width="500" height="500"></canvas>
         </div>
         {% endif %}
     </div>

@@ -3,9 +3,8 @@ from itertools import groupby
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 import os
 import csv
-from collections import Counter
+from collections import Counter, defaultdict
 from werkzeug.utils import secure_filename
-from deep_packet_src.prediction import deep_packet_predict
 
 
 app = Flask(__name__)
@@ -34,17 +33,26 @@ def check_pcap_or_pcapng(file_path):
 
 
 def get_top_talkers(csv_filename, n=5):
-    # Read the CSV file and calculate the frequency of each talker
-    talker_frequency = Counter()
-    with open(csv_filename, 'r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            talker_frequency[row['Source IP']] += 1
-            talker_frequency[row['Destination IP']] += 1
+    talkers = defaultdict(lambda: {'Frequency': 0, 'Traffic': '', 'App Label': ''})
+    with open(csv_filename, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for row in csv_reader:
+            source_ip = row['Source IP']
+            destination_ip = row['Destination IP']
+            talker_key = f'{source_ip} -> {destination_ip}'
+            talkers[talker_key]['Frequency'] += 1
+            if talkers[talker_key]['Frequency'] == 1:
+                talkers[talker_key]['Traffic'] = row['Traffic Label']
+                talkers[talker_key]['App Label'] = row['App Label']
+            else:
+                # If another row is found for the same talker, keep the most frequent Traffic and App Label
+                if row['Traffic Label'] in ['P2P', 'File Transfer']:
+                    talkers[talker_key]['Traffic'] = row['Traffic Label']
+                if row['App Label']:
+                    talkers[talker_key]['App Label'] = row['App Label']
 
-    # Get the top n talkers
-    top_talkers = talker_frequency.most_common(n)
-    return top_talkers
+    sorted_talkers = dict(sorted(talkers.items(), key=lambda item: item[1]['Frequency'], reverse=True)[:n])
+    return sorted_talkers
 
 
 def get_top_ip_combinations(csv_filename, n=5):
