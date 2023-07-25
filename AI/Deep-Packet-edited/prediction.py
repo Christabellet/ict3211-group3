@@ -23,7 +23,7 @@ from scapy.layers.l2 import Ether
 from scapy.packet import Padding
 from scipy import sparse
 
-from ml.utils import load_application_classification_cnn_model, load_traffic_classification_cnn_model
+from ml.ml_utils import load_application_classification_cnn_model, load_traffic_classification_cnn_model
 import torch
 from torch.utils.data import DataLoader
 
