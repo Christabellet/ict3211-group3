@@ -1,5 +1,5 @@
 ## Explanation of the code
-#### #### The objective of this exercise is to create a basic topology with host and p4 switches along with adding links connecting them together. Implementing a p4 program to enable switches to bounce back packets to the interface that they came from.
+#### The objective of this exercise is to create a basic topology with host and p4 switches along with adding links connecting them together. Implementing a p4 program to enable switches to bounce back packets to the interface that they came from.
 
 In this exercise, you would require 3 files as shown below, 
 
