@@ -6,7 +6,7 @@ In this exercise, you would require 3 files as shown below,
 | File | Description |
 | --- | --- |
 | `p4app.json` | creates the topology of the network diagram |
-| `reflector.p4` | p4 program that defines how packets should flow in a network diagram |
+| `repeater_without_tables.p4` | p4 program that defines how packets should flow in a network diagram |
 | `s1-commands.txt` | forwarding entries to table |
 
 In the repeater_without_tables.p4 file,  
