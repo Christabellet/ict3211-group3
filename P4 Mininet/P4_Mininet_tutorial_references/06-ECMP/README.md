@@ -3,14 +3,44 @@
 ## Packet Tracer Topology
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/e8363d25-57b7-4144-9d77-467bb574bd64)
 ## P4 Mininet
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/aac13c64-eb45-4ada-88e9-d2831c9f39a1)
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/aac13c64-eb45-4ada-88e9-d2831c9f39a1)
 #### Here we can see that the ping request and reply for h1 and h2 took a different path upon closer inspection on the timing of the packet. However, it does not look like a load balancing has occurred as there is no congestion. We can do another test to see a better visual look at ECMP load balancing. 
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/6d70e124-f668-434f-89fd-71d4f9c63b1f)
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/6d70e124-f668-434f-89fd-71d4f9c63b1f)
 #### Here by simply sending slightly more packets, we are able to simulate the ECMP load balancing. 
+## P4 Switch Thrift Port
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/f3098615-dd86-421a-89d2-b4d5dba00594)
+#### The P4 switch thrift port allows the user to use CLI to access the P4 switch.
 ## Flow Rules
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/214bb5ee-585b-4c52-9762-52876001d71d)
-#### The flow rules of the switch will first go through ipv4_lpm table including forwarding to the next hop, forwarding to an ECMP group, or dropping the packet. 
+#### This is the flow rules of the S1:
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/8596437d-b875-4924-99dd-f37288c25e9a)
+#### The P4 switch flow rules will first go through ipv4_lpm table including forwarding to the next hop, forwarding to an ECMP group, or dropping the packet. 
 #### If the flow rules dictate that the ecmp_group_to_nhop is used, it will determine the next hop for the packet that belongs to a specific ECMP group, `scalars.userMetadata.ecmp_group_id`, based on their calculated hash values, `scalars.userMetadata.ecmp_hash`. The table will map both the ECMP group identifier and hash value to the specific next hop identifier, in this way, it allows the switch to perform some sort of load balancing across multiple paths with equal cost. 
+#### This is the flow rules of S2:
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/230132d6-13bf-4b45-af59-6a80b813840f)
+#### There is no entry for the ecmp_group_to_nhop table as the P4 switch does not need to take ECMP into consideration since it only has a ingress and a egress port. 
+#### This is the flow rules of S3: 
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/54137788-1bbf-4576-8f24-50e7928eedec)
+#### This is the flow rules of S4:
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/92a5eafb-5fa3-428b-a65b-0f2d6e847c6a)
+#### This is the flow rules of S5:
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/11ab50ea-7b36-46aa-b19a-d6f12f854a81)
+#### This is the flow rules of S6:
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/3a9bdd5f-8806-4cbc-aac2-8f05985fa783)
+## Possible packet path
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/3cfa182c-a9d1-4a80-942c-c1583270c3d3)
+#### This is a simple possible path that the packet can take when there is a meagre amount of traffic. 
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/842119c9-2ad8-4712-837f-a0e0d15892bc)
+#### This is also another possible path that the packet can take when there are higher amount of traffic, the return path can differ from the sending path to load balance the network traffic. It is similar to this for the other three sending pathways such as 
+1. H1->S1->S3->S6->H2->S6->S2->S1->H1
+2. H1->S1->S3->S6->H2->S6->S4->S1->H1
+3. H1->S1->S3->S6->H2->S6->S5->S1->H1
+4. H1->S1->S4->S6->H2->S6->S2->S1->H1
+5. H1->S1->S4->S6->H2->S6->S3->S1->H1
+6. H1->S1->S4->S6->H2->S6->S5->S1->H1
+7. H1->S1->S5->S6->H2->S6->S2->S1->H1
+8. H1->S1->S5->S6->H2->S6->S3->S1->H1
+9. H1->S1->S5->S6->H2->S6->S4->S1->H1
+#### Read the flow chart below with its description to understand further what the packet process is like during the packet travel in the P4 switch. 
 ## Flow Chart
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/5dc81337-9b19-467d-ba11-10a753ff83bb)
 ### 1. Parser
