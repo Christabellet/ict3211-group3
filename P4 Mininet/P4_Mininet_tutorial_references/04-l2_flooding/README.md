@@ -6,7 +6,8 @@
 ## P4 Mininet
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/459017a8-7983-4b49-8608-31cefbfc2c42)
 ## P4 Switch Thrift Port
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/19609d37-9cb5-4cb0-847a-9247b3da707a)
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/19609d37-9cb5-4cb0-847a-9247b3da707a)
+#### The P4 switch thrift port allows the user to use CLI to access the P4 switch.
 ## Flow Rules
 #### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/f3e407b9-d655-4ccd-8787-5d10dd688da1)
 #### The flow rules of the switch will first go through dmac table for forwarding packet based on their destination MAC address. If the packet needs to be broadcasted, as defined in the ```broadcast``` action section of the dmac table, the flow will proceed to the select_mcast_grp table to set the multicast group based on the ingress port. 
