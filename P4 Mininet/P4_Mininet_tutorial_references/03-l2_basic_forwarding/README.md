@@ -4,8 +4,11 @@
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/6bba1625-0d83-408f-8be2-59ef419a233e)
 ## P4 Mininet
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/83f29cf4-ef89-4915-9c5e-c954586de80c)
+## P4 Switch Thrift Port
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/acef1ae6-4d5d-4684-a6b1-919b59c9be25)
+#### The P4 switch thrift port allows the user to use CLI to access the P4 switch. 
 ## Flow Rules 
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/cd1527d0-aa36-4888-9317-b8a3349b74ea)
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/9191d553-4fa5-4ba9-a1de-3b9b30f9fdfe)
 ### 1. Dumping entry
 ``` The dumping entry shows the sequence of the packet information that is processed in the P4 switch. ```
 ### 2. Match key
