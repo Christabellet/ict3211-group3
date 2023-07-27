@@ -6,7 +6,8 @@
 ## P4 Mininet
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/dc25f2ae-c8b9-4499-be5d-d845e47478b1)
 ## P4 Switch Thrift Port
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/203a1a9d-cc69-4413-accd-db980c195bf0)
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/203a1a9d-cc69-4413-accd-db980c195bf0)
+#### The P4 switch thrift port allows the user to use CLI to access the P4 switch.
 ## Flow Rules 
 ### Before ‘l2_learning_controller.py’ is executed. 
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/e840fa8e-81d7-4713-a62d-7ade11efb813)
