@@ -5,7 +5,7 @@
 ## P4 Mininet
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/83f29cf4-ef89-4915-9c5e-c954586de80c)
 ## P4 Switch Thrift Port
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/acef1ae6-4d5d-4684-a6b1-919b59c9be25)
+#### ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/acef1ae6-4d5d-4684-a6b1-919b59c9be25)
 #### The P4 switch thrift port allows the user to use CLI to access the P4 switch. 
 ## Flow Rules 
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/9191d553-4fa5-4ba9-a1de-3b9b30f9fdfe)
