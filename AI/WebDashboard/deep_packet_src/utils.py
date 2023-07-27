@@ -47,8 +47,8 @@ PREFIX_TO_APP_ID = {
     # Teams
     "teams_chat": 7,
     "teams_download_upload_chat": 7,
-    "teams_download": 7,
-    "teams_upload": 7,
+    "teams_downloads": 7,
+    "teams_uploads": 7,
     "teams2023_audio_video_1": 7,
     # Valorant
     "valorant2023_1": 8,
@@ -100,8 +100,8 @@ PREFIX_TO_TRAFFIC_ID = {
     "sftpdown2": 2,
     "sftpup1": 2,
     "teams_download_upload_chat": 2,
-    "teams_download": 2,
-    "teams_upload": 2,
+    "teams_downloads": 2,
+    "teams_uploads": 2,
     # Streaming
     "netflix2023_1": 3,
     "netflix2023_2": 3,
