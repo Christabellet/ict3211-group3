@@ -5,8 +5,10 @@
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/b00714e8-e533-41ea-92b3-c1bfb6b35281)
 ## P4 Mininet
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/459017a8-7983-4b49-8608-31cefbfc2c42)
+## P4 Switch Thrift Port
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/19609d37-9cb5-4cb0-847a-9247b3da707a)
 ## Flow Rules
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/9fbbdac4-faf9-4244-ba28-bb3d5acc61a4)
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/f3e407b9-d655-4ccd-8787-5d10dd688da1)
 #### The flow rules of the switch will first go through dmac table for forwarding packet based on their destination MAC address. If the packet needs to be broadcasted, as defined in the ```broadcast``` action section of the dmac table, the flow will proceed to the select_mcast_grp table to set the multicast group based on the ingress port. 
 ## Flow Chart
 # ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/ddd53e1f-6365-4710-9c8f-1462399b3890)
