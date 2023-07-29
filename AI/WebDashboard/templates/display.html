@@ -40,40 +40,21 @@
                     <th>Destination IP</th>
                     <th>Frequency</th>
                     <th>Most Frequent Traffic</th>
+                    {% if 'App Label' in data[0] %}
                     <th>Most Frequent App Label</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
-                {% for talker, data in top_talkers.items() %}
+                {% for talker, data in top_ip_combinations.items() %}
                 <tr>
-                    <td>{{ talker.split(' -> ')[0] }}</td>
-                    <td>{{ talker.split(' -> ')[1] }}</td>
+                    <td>{{ talker.split(' - ')[0] }}</td>
+                    <td>{{ talker.split(' - ')[1] }}</td>
                     <td>{{ data['Frequency'] }}</td>
                     <td>{{ data['Traffic'] }}</td>
-                    <td>{{ data['App Label'] }}</td>
-                </tr>
-                <!-- Add two more rows for most frequent traffic and app label -->
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-<!--    <h2>Top 5 Source IP and Destination IP Combinations</h2>-->
-    <div>
-        <table>
-            <caption style="text-align: left;">Top 5 Source IP and Destination IP Combinations</caption>
-            <thead>
-                <tr>
-                    <th>Source IP</th>
-                    <th>Destination IP</th>
-                    <th>Frequency</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for combination, count in top_ip_combinations.items() %}
-                <tr>
-                    <td>{{ combination[0] }}</td>
-                    <td>{{ combination[1] }}</td>
-                    <td>{{ count }}</td>
+                    {% if data['Application'] %}
+                    <td>{{ data['Application'] }}</td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
@@ -84,6 +65,25 @@
             <h2>Traffic Label Distribution</h2>
             <!-- Generate the pie chart using JavaScript -->
             <canvas id="trafficLabelChart" width="500" height="500"></canvas>
+            <div class="chartBox">
+                <h2>Top 5 Most Frequent Traffic Labels</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Traffic Label</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for label, percentage in traffic_label_percentages.items() %}
+                        <tr>
+                            <td>{{ label }}</td>
+                            <td>{{ percentage|round(2) }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         <!-- Check if "App Label" data is available and create the pie chart -->
         {% if 'App Label' in data[0] %}
@@ -93,6 +93,25 @@
 
             <!-- Generate the pie chart for "Traffic Label" using JavaScript -->
             <canvas id="appLabelChart" width="500" height="500"></canvas>
+            <div class="chartBox">
+                <h2>Top 5 Most Frequent Application Labels</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application Label</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for label, percentage in app_label_percentages.items() %}
+                        <tr>
+                            <td>{{ label }}</td>
+                            <td>{{ percentage|round(2) }}%</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
         {% endif %}
     </div>

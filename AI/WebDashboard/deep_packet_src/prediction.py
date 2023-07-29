@@ -109,7 +109,7 @@ def transform_packet(packet):
     return five_tuple_list, arr
 
 
-def transform_pcap(path, output_path: Path = None, output_batch_size=10000):
+def transform_pcap(spark, path, output_path: Path = None, output_batch_size=10000):
     if Path(str(output_path.absolute()) + "_SUCCESS").exists():
         print(output_path, "Done")
         return
@@ -128,17 +128,6 @@ def transform_pcap(path, output_path: Path = None, output_batch_size=10000):
                 "feature": arr.todense().tolist()[0],
             }
             rows.append(row)
-
-    # initialise local spark
-    os.environ["PYSPARK_PYTHON"] = sys.executable
-    os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
-    memory_gb = psutil.virtual_memory().available // 1024 // 1024 // 1024
-    spark = (
-        SparkSession.builder.master("local[*]")
-        .config("spark.driver.memory", f"{memory_gb}g")
-        .config("spark.driver.host", "127.0.0.1")
-        .getOrCreate()
-    )
 
     df = spark.createDataFrame(pd.DataFrame(rows))
     # print(df.show())
@@ -160,10 +149,22 @@ def deep_packet_predict(source, target):
     data_path = Path(source)
     target_dir_path = Path(target)
     target_dir_path.mkdir(parents=True, exist_ok=True)
+    
+    # initialise local spark
+    os.environ["PYSPARK_PYTHON"] = sys.executable
+    os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+    memory_gb = psutil.virtual_memory().available // 1024 // 1024 // 1024
+    spark = (
+        SparkSession.builder.master("local[*]")
+        .config("spark.driver.memory", f"{memory_gb}g")
+        # .config("spark.driver.memory", f"2g")
+        .config("spark.driver.host", "127.0.0.1")
+        .getOrCreate()
+    )
 
     print(data_path)
     print(data_path.stem)
-    transformed = transform_pcap(data_path, target_dir_path / (data_path.name + ".transformed"))
+    transformed = transform_pcap(spark, data_path, target_dir_path / (data_path.name + ".transformed"))
 
     # for pcap_path in sorted(data_dir_path.iterdir()):
     #     print(pcap_path)
@@ -176,12 +177,12 @@ def deep_packet_predict(source, target):
     df, five_tuple = transformed
 
     # model path
-    application_classification_cnn_model_path = 'deep_packet_src/model/updated_app.cnn.model'
+    application_classification_cnn_model_path = 'deep_packet_src/model/undersampled_app.cnn.model'
     app_model = load_application_classification_cnn_model(
         application_classification_cnn_model_path,
         gpu=False)
 
-    traffic_classification_cnn_model_path = 'deep_packet_src/model/updated_traffic.cnn.model'
+    traffic_classification_cnn_model_path = 'deep_packet_src/model/undersampled_traffic.cnn.model'
     traffic_model = load_traffic_classification_cnn_model(
         traffic_classification_cnn_model_path,
         gpu=False)

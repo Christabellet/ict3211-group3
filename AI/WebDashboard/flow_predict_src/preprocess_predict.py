@@ -76,7 +76,7 @@ def predict_pcap(csvfilepath, filename):
         'Dst Port': 'Destination Port',
         'Protocol': 'Protocol'
     }
-    five_tuple['App Label'] = np.nan
+
     # Rename the columns
     five_tuple.rename(columns=column_names, inplace=True)
 
