@@ -42,7 +42,7 @@
 9. H1->S1->S5->S6->H2->S6->S4->S1->H1
 #### Read the flow chart below with its description to understand further what the packet process is like during the packet travel in the P4 switch. 
 ## Flow Chart
-# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/5dc81337-9b19-467d-ba11-10a753ff83bb)
+# ![image](https://github.com/PototoPatata/ict3211-group3/assets/20123754/e12eb5a9-18e2-4e6b-b287-01531f6ec9cc)
 ### 1. Parser
 ```
 state start {
