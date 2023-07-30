@@ -3,45 +3,67 @@ import pandas as pd
 
 PATH_TO_CSV = "./output/"
 
-# Web browsing      Firefox and Chrome
-# Email             SMTP, POP3S, and IMAPS
-# Chat              ICQ, AIM, Facebook, and Hangouts
-# Streaming         Vimeo and YouTube
-# File Transfer     Skype, FTPS, and SFTP using FileZilla and an external service 
-# VoIP              Facebook, Skype, and Hangouts voice calls (duration for 1 hour)
-# P2P               uTorrent and Transmission (BitTorrent)
-# VPN Web browsing  Firefox and Chrome
-# VPN Email         SMTP, POP3S, and IMAPS
-# VPN Chat          ICQ, AIM, Facebook, and Hangouts
-# VPN Streaming     Vimeo and YouTube
-# VPN File Transfer Skype, FTPS, and SFTP using FileZilla and an external service 
-# VPN VoIP          Facebook, Skype, and Hangouts voice calls (duration for 1 hour)
-# VPN P2P           uTorrent and Transmission (BitTorrent)
 
 
-def categorize_filename_default(filename):
-    filename = filename.lower()
-    keywords = {
-        #"Web browsing": [],
-        "Email": ["email"],
-        "Chat": ["aimchat", "aim_chat", "facebook_chat","hangouts_chat", "facebookchat", "gmailchat", "icq_chat", "icqchat", "skype_chat", "hangout_chat"],
-        "Streaming": ["youtube", "vimeo", "netflix", "spotify"],
-        "File Transfer": ["ftps", "scp", "sftp", "skype_file"],
-        "VoIP": ["facebook_audio", "hangouts_audio", "hangouts_video", "skype_video", "facebook_video", "voipbuster", "skype_audio"],
-        "P2P": ["bittorrent"],
+
+def categorize_filename_traffic(filename):
+    filename = filename.lower().replace(".pcap_flow.csv", "")
+
+    prefix_label_dict = {
+        # Chat
+        "discord2023_chat_1": 0,
+        "discord2023_chat_2": 0,
+        "discord2023_chat_3": 0,
+        "teams_chat": 0,
+
+        # Email
+        "email1a": 1,
+        "email1b": 1,
+        "email2a": 1,
+        "email2b": 1,
+
+        # File Transfer
+        "discord2023_download_1": 2,
+        "discord2023_upload_1": 2,
+        "ftps_down_1a": 2,
+        "ftps_down_1b": 2,
+        "ftps_up_2a": 2,
+        "ftps_up_2b": 2,
+        "sftp1": 2,
+        "sftp_down_3a": 2,
+        "sftp_down_3b": 2,
+        "sftp_up_2a": 2,
+        "sftp_up_2b": 2,
+        "sftpdown1": 2,
+        "sftpdown2": 2,
+        "sftpup1": 2,
+        "teams_download_upload_chat": 2,
+        "teams_downloads": 2,
+        "teams_uploads": 2,
+
+        # Streaming
+        "netflix2023_1": 3,
+        "netflix2023_2": 3,
+        "netflix2023_3": 3,
+        "spotify2023_1": 3,
+        "spotify2023_2": 3,
+        "vimeo2023_1": 3,
+        "youtube2023_1": 3,
+        "youtube2023_2": 3,
+
+        # VoIP
+        "discord2023_audio_1": 4,
+        "discord2023_audio_video_1": 4,
+        "teams2023_audio_video_1": 4,
+
+        # Gaming
+        "csgo2023_1": 5,
+        "netflixgame": 5,
+        "valorant2023_1": 5
     }
-
-    result = None
     
-    for category, keys in keywords.items():
-        if any(key in filename for key in keys):
-            result = category
-            break
 
-    if "vpn" in filename and result:
-        result = "VPN " + result
-
-    return result
+    return prefix_label_dict[filename]
 
 
 def categorize_filename_application(filename):
@@ -70,11 +92,8 @@ def main():
         for file in files:           
             filepath = os.path.join(root, file)
             if filepath.endswith('.csv'):
-                category = categorize_filename_default(filepath)
+                category = categorize_filename_traffic(file)
                 df = pd.read_csv(filepath, usecols=selected_columns)
-                if category is None:
-                    continue
-
                 df['Label'] = category
                 compiled_data.append(df)
 
@@ -83,6 +102,7 @@ def main():
 
     # Write to the compiled CSV
     df.to_csv('compiled.csv', index=False)
+
 
 if __name__ == "__main__":
     main()

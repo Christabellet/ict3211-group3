@@ -11,7 +11,6 @@ import os
 
 PATH_TO_DATASET = "./dataset/"
 
-
 def convert_pcapng_to_pcap(filepath, filename, output_directory="."):
     filename = filename.split(".")[0]
     output =  os.path.join(output_directory, f"{filename}.pcap")
