@@ -29,7 +29,7 @@ def confusion_matrix(data_path, model, num_class):
         num_workers = 1
     dataloader = DataLoader(
         dataset,
-        batch_size=2048,
+        batch_size=1024,
         num_workers=num_workers,
         collate_fn=dataset_collate_function,
     )
@@ -58,20 +58,53 @@ def get_recall(cm, i):
     return tp / p
 
 
+def get_false_positive(cm, i):
+    fp = cm[:, i].sum() - cm[i, i]
+    return fp
+
+
+def get_true_positive(cm, i):
+    tp = cm[i, i]
+    return tp
+
+
+def get_true_negative(cm, i):
+    # Sum of all elements in the confusion matrix except for the i-th row and i-th column
+    tn = cm.sum() - cm[i, :].sum() - cm[:, i].sum() + cm[i, i]
+    return tn
+
+
+def get_false_negative(cm, i):
+    # Sum of the i-th row (excluding the i-th element)
+    fn = cm[i, :].sum() - cm[i, i]
+    return fn
+
+
 def get_classification_report(cm, labels=None):
     rows = []
     for i in range(cm.shape[0]):
         precision = get_precision(cm, i)
         recall = get_recall(cm, i)
+        true_positive = get_true_positive(cm, i)
+        false_positive = get_false_positive(cm, i)
+        false_negative = get_false_negative(cm, i)
+        true_negative = get_true_negative(cm, i)
         if labels:
             label = labels[i]
         else:
             label = i
 
-        row = {"label": label, "precision": precision, "recall": recall}
+        row = {"label": label,
+               "precision": precision,
+               "recall": recall,
+               "true positive": true_positive,
+               "false positive": false_positive,
+               "true negative": true_negative,
+               "false negative": false_negative,
+               }
         rows.append(row)
 
-        print("Current row: ")
-        print(row)
+        # print("Current row: ")
+        # print(row)
 
     return pd.DataFrame(rows)
