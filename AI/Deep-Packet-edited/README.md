@@ -46,7 +46,7 @@ This section contains the steps for training the model.
     python train_cnn.py -d train_test_data/traffic_classification/train.parquet -m model/traffic_classification.cnn.model -t traffic
 
 ### Pretrained Models
-The pretrained models can be downloaded [here](https://drive.google.com/drive/folders/1Ctb6pxJlZCYZQepWbLRQ0CR7IiqaMDgO?usp=sharing).
+The pretrained models can be downloaded [here](https://drive.google.com/drive/folders/1nHn3JUho04FJdeX8eVcfSmyE42qXXzTV).
 
 ## Evalutating Model
 Change the model and test data directory accordingly in the .ipynb file. 
