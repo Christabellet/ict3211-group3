@@ -38,7 +38,7 @@ This section contains the steps for training the model.
 
     python create_train_test_set.py -s processed_data -t train_test_data
 
-## Training Model
+# Training Model
 ### Application Model
     python train_cnn.py -d train_test_data/application_classification/train.parquet -m model/application_classification.cnn.model -t app
 ### Traffic Model
